@@ -26,7 +26,17 @@ public class Main {
             System.out.println("Введите растояние до Вас: ");
             try{
                 distance = Integer.parseInt(sc.next());
-                changeTime(distance);
+                int time = changeTime(distance);
+                System.out.println("Расстояние: "+ distance + " км");
+                if (time == 1){
+                    System.out.println("Доставка займет сутки");
+                } else if (time == 2){
+                    System.out.println("Доставка займет 2 дня");
+                } else if (time == 3){
+                    System.out.println("Доставка займет 3 дня");
+                } else {
+                    System.out.println("Свыше 100км доставки нет.");
+                }
                 success = true;
             }catch (NumberFormatException ex) {
                 System.out.println("Дистанция должна быть указана числом!");
@@ -62,16 +72,15 @@ public class Main {
             System.out.println("Установите облегченную версию приложения для UNIX системы по ссылке");
         }
     }
-    private static void changeTime(int distance){
-        System.out.println("Расстояние: "+ distance + " км");
+    private static int changeTime(int distance){
+        int time = -1;
         if (distance <= 20){
-            System.out.println("Доставка займет сутки");
+            time = 1;
         } else if (distance <= 60){
-            System.out.println("Доставка займет 2 дня");
+            time = 2;
         } else if (distance <= 100){
-            System.out.println("Доставка займет 3 дня");
-        } else {
-            System.out.println("Свыше 100км доставки нет.");
+            time = 3;
         }
+        return time;
     }
 }
