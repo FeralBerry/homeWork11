@@ -9,31 +9,35 @@ public class Main {
         System.out.println("Задача 1");
         int year;
         boolean success = false;
+        // Запуск программы в бесконечный цикл пока не будет получена цифра с клавиатуры
         do{
             System.out.println("Введите год для проверки: ");
+            // обработка исключения введения с клавиатуры значения отличного от цифры
             try{
                 year = Integer.parseInt(sc.next());
-                checkYear(year);
+                // вызов метода определения висакосного года с выводом результата
+                printIsLeapYearOrNot(year);
                 success = true;
             }catch (NumberFormatException ex) {
                 System.out.println("Год должен быть цыфрой!");
             }
         } while (!success);
-        changeOS();
+        // запуск метода определяющего операционную систему пользователя и с выводом результата
+        printSuggestionForInstallation();
         success = false;
         int distance;
+        // Запуск программы в бесконечный цикл пока не будет получена цифра с клавиатуры
         do{
             System.out.println("Введите растояние до Вас: ");
+            // обработка исключения введения с клавиатуры значения отличного от цифры
             try{
                 distance = Integer.parseInt(sc.next());
-                int time = changeTime(distance);
+                int days = calculateDeliveryDays(distance);
                 System.out.println("Расстояние: "+ distance + " км");
-                if (time == 1){
+                if (days == 1){
                     System.out.println("Доставка займет сутки");
-                } else if (time == 2){
-                    System.out.println("Доставка займет 2 дня");
-                } else if (time == 3){
-                    System.out.println("Доставка займет 3 дня");
+                } else if (days == 2 || days == 3){
+                    System.out.println("Доставка займет " + days + " дня");
                 } else {
                     System.out.println("Свыше 100км доставки нет.");
                 }
@@ -43,14 +47,14 @@ public class Main {
             }
         } while (!success);
     }
-    private static void checkYear(int year){
+    private static void printIsLeapYearOrNot(int year){
         if(year % 4 == 0 && year % 100 != 0 || year % 400 == 0){
             System.out.println(year + " год является високосным");
         } else {
             System.out.println(year + " год не является високосным");
         }
     }
-    private static void changeOS(){
+    private static void printSuggestionForInstallation(){
         int minYear = 2000;
         int maxYear = 2023;
         int year = (int) (Math.random() * (maxYear - minYear + 1)) + minYear;
@@ -72,15 +76,15 @@ public class Main {
             System.out.println("Установите облегченную версию приложения для UNIX системы по ссылке");
         }
     }
-    private static int changeTime(int distance){
-        int time = -1;
-        if (distance <= 20){
-            time = 1;
+    private static int calculateDeliveryDays(int distance){
+        int days = -1;
+        if (distance <= 20 && distance > 0){
+            days = 1;
         } else if (distance <= 60){
-            time = 2;
+            days = 2;
         } else if (distance <= 100){
-            time = 3;
+            days = 3;
         }
-        return time;
+        return days;
     }
 }
